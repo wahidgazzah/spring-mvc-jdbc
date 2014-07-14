@@ -41,18 +41,11 @@ public class HomePageController {
 		genderList.add(Gender.M.getAbreviation());
 		
 		logger.info("genderList: "+genderList);
-		
-		// OR
-//		genderList.add("male");
-//		genderList.add("female");
+
 
 		List<String> cityNameList = new ArrayList<String>();
 		// use CityService to get the city_name list
 		cityNameList = cityService.getCityList();
-//		cityNameList.add("delhi");
-//		cityNameList.add("gurgaon");
-//		cityNameList.add("meerut");
-//		cityNameList.add("noida");
 		
 		logger.info("cityNameList: "+cityNameList);
 
@@ -103,15 +96,11 @@ public class HomePageController {
 		List<String> genderList = new ArrayList<String>();
 		genderList.add(Gender.F.getAbreviation());
 		genderList.add(Gender.M.getAbreviation());
-//		genderList.add("male");
-//		genderList.add("female");
+
 
 		List<String> cityNameList = new ArrayList<String>();
 		cityNameList = cityService.getCityList();
-//		cityList.add("delhi");
-//		cityList.add("gurgaon");
-//		cityList.add("meerut");
-//		cityList.add("noida");
+
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("genderList", genderList);
