@@ -26,7 +26,6 @@ public class UserDaoImpl extends StoredProcedure implements UserDao {
 	
 	private static final String PROC_NAME = "GetListUsers";
 	
-	
 	@Autowired
     public UserDaoImpl(DataSource ds) {		
         super(ds, PROC_NAME);
