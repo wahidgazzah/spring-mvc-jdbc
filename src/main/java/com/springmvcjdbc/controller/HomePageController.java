@@ -8,10 +8,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.springmvcjdbc.domain.Gender;
 import com.springmvcjdbc.domain.User;
@@ -30,7 +30,7 @@ public class HomePageController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("/register")
-	public ModelAndView registerUser(@ModelAttribute User user) {
+	public String registerUser(@ModelAttribute User user, Model model) {
 		
 		logger.info("RequestMapping: /register");
 		
@@ -53,7 +53,9 @@ public class HomePageController {
 		map.put("genderList", genderList);
 		map.put("cityList", cityNameList);
 		
-		return new ModelAndView("register", "map", map);
+		//return new ModelAndView("register", "map", map);
+		model.addAttribute("map", map);
+		return "register";
 	}
 
 	@RequestMapping("/insert")
@@ -70,7 +72,7 @@ public class HomePageController {
 	}
 
 	@RequestMapping("/getList")
-	public ModelAndView getUserLIst() {
+	public String getUserLIst(Model model) {
 		
 		logger.info("RequestMapping: /getList");
 		System.out.println("sys: RequestMapping: /getList");
@@ -79,13 +81,14 @@ public class HomePageController {
 		
 		logger.info("userList: "+userList);
 		
-		return new ModelAndView("userList", "userList", userList);
+		//return new ModelAndView("userList", "userList", userList);
+		model.addAttribute("userList", userList);
+		return "userList";
 		
 	}
 
 	@RequestMapping("/edit")
-	public ModelAndView editUser(@RequestParam String id,
-			@ModelAttribute User user) {
+	public String editUser(@RequestParam String id,@ModelAttribute User user,Model model) {
 		
 		logger.info("RequestMapping: /edit");
 
@@ -107,7 +110,9 @@ public class HomePageController {
 		map.put("cityList", cityNameList);
 		map.put("user", user);
 
-		return new ModelAndView("edit", "map", map);
+		model.addAttribute("map", map);
+		
+		return "edit";
 
 	}
 
