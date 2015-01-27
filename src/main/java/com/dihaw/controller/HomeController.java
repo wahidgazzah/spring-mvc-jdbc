@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +20,26 @@ import com.dihaw.services.CityService;
 import com.dihaw.services.UserService;
 
 @Controller
-public class HomePageController {
-	private static final Logger logger = Logger.getLogger(HomePageController.class);
+@RequestMapping("/jdbc")
+public class HomeController {
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
+	private static String REGISTER_VIEW = "pages/sms/register";
+	private static String LIST_VIEW = "pages/sms/list";
+	private static String EDIT_VIEW = "pages/sms/edit";
 
 	@Autowired
 	UserService userService;
 	
 	@Autowired
 	CityService cityService;
+	
+	@RequestMapping("/test")
+	public String testData() {
+		logger.info("------------test");
+		return "test";
+	}
 
-	@SuppressWarnings("rawtypes")
 	@RequestMapping("/register")
 	public String registerUser(@ModelAttribute User user, Model model) {
 		
@@ -36,15 +47,12 @@ public class HomePageController {
 		
 		List<String> genderList = new ArrayList<String>();
 		
-		// use enum for GENDER
 		genderList.add(Gender.F.getAbreviation());
 		genderList.add(Gender.M.getAbreviation());
 		
 		logger.info("genderList: "+genderList);
-
-
+		
 		List<String> cityNameList = new ArrayList<String>();
-		// use CityService to get the city_name list
 		cityNameList = cityService.getCityList();
 		
 		logger.info("cityNameList: "+cityNameList);
@@ -53,9 +61,9 @@ public class HomePageController {
 		map.put("genderList", genderList);
 		map.put("cityList", cityNameList);
 		
-		//return new ModelAndView("register", "map", map);
 		model.addAttribute("map", map);
-		return "register";
+		return REGISTER_VIEW;
+		
 	}
 
 	@RequestMapping("/insert")
@@ -68,27 +76,27 @@ public class HomePageController {
 		if (user != null)
 			userService.insertData(user);
 		
-		return "redirect:/getList";
+		return "redirect:/jdbc/getList";
 	}
+	
 
 	@RequestMapping("/getList")
 	public String getUserLIst(Model model) {
 		
 		logger.info("RequestMapping: /getList");
-		System.out.println("sys: RequestMapping: /getList");
 		
 		List<User> userList = userService.getUserList();
 		
 		logger.info("userList: "+userList);
 		
-		//return new ModelAndView("userList", "userList", userList);
 		model.addAttribute("userList", userList);
-		return "userList";
+		return LIST_VIEW;
 		
 	}
 
 	@RequestMapping("/edit")
-	public String editUser(@RequestParam String id,@ModelAttribute User user,Model model) {
+	public String editUser(@RequestParam String id,
+			@ModelAttribute User user, Model model) {
 		
 		logger.info("RequestMapping: /edit");
 
@@ -100,10 +108,8 @@ public class HomePageController {
 		genderList.add(Gender.F.getAbreviation());
 		genderList.add(Gender.M.getAbreviation());
 
-
 		List<String> cityNameList = new ArrayList<String>();
 		cityNameList = cityService.getCityList();
-
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("genderList", genderList);
@@ -111,8 +117,7 @@ public class HomePageController {
 		map.put("user", user);
 
 		model.addAttribute("map", map);
-		
-		return "edit";
+		return EDIT_VIEW;
 
 	}
 
@@ -123,7 +128,7 @@ public class HomePageController {
 		
 		userService.updateData(user);
 		
-		return "redirect:/getList";
+		return "redirect:/jdbc/getList";
 
 	}
 
@@ -135,6 +140,6 @@ public class HomePageController {
 		System.out.println("id = " + id);
 		userService.deleteData(id);
 		
-		return "redirect:/getList";
+		return "redirect:/jdbc/getList";
 	}
 }

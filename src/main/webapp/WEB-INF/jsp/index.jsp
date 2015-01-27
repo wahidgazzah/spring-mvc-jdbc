@@ -22,7 +22,7 @@
 				<li>Surf in the Import menu to Git and select Projects from Git.</li>
 				<li>Choose URI at this point...</li>
 				<li>To run the project, use "clean compile install" cmd.</li>
-				<li>Go to http://localhost:port/spring-mvc/</li>
+				<li>Go to http://localhost:port/spring-mvc-jdbc/</li>
 			</ul>
 
 		</div>

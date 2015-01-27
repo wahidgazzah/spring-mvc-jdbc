@@ -2,38 +2,19 @@ package com.dihaw.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.metadata.CallMetaDataContext;
-import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Repository;
 
 import com.dihaw.dao.UserDao;
 import com.dihaw.domain.User;
 import com.dihaw.jdbc.UserRowMapper;
-
 @Repository
-public class UserDaoImpl extends StoredProcedure implements UserDao {
+public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	DataSource dataSource;
-	
-	protected CallMetaDataContext context = new CallMetaDataContext();
-	
-	private static final String PROC_NAME = "GetListUsers";
-	
-	@Autowired
-    public UserDaoImpl(DataSource ds) {		
-        super(ds, PROC_NAME);
-        context.setProcedureName(PROC_NAME);
-		context.initializeMetaData(ds);
-        declareParameter(context.createReturnResultSetParameter("p_out", new UserRowMapper()));
-        compile(); 
-    }
 
 	public void insertData(User user) {
 
@@ -49,16 +30,17 @@ public class UserDaoImpl extends StoredProcedure implements UserDao {
 
 	}
 
-	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<User> getUserList() {
-		Map<String, Object> out = execute();
-    	List<User> userList = (List<User>) out.get("p_out");    
+		List userList = new ArrayList();
+
+		String sql = "select * from user";
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		userList = jdbcTemplate.query(sql, new UserRowMapper());
 		return userList;
 	}
 
-	
-	
-	
 	public void deleteData(String id) {
 		String sql = "delete from user where user_id=" + id;
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
