@@ -1,18 +1,17 @@
-package com.springmvcjdbc.dao;
+package com.dihaw.services;
 
 import java.util.List;
 
-import com.springmvcjdbc.domain.User;
+import com.dihaw.domain.User;
 
-public interface UserDao {
+public interface UserService {
 	public void insertData(User user);
 
 	public List<User> getUserList();
-
-	public void updateData(User user);
 
 	public void deleteData(String id);
 
 	public User getUser(String id);
 
+	public void updateData(User user);
 }

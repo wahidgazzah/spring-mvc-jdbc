@@ -1,11 +1,11 @@
-package com.springmvcjdbc.jdbc;
+package com.dihaw.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.springmvcjdbc.domain.User;
+import com.dihaw.domain.User;
 
 public class UserRowMapper implements RowMapper<User> {
 

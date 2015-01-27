@@ -1,4 +1,4 @@
-package com.springmvcjdbc.domain;
+package com.dihaw.domain;
 
 public class User {
 

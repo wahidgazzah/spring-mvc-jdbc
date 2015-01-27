@@ -1,13 +1,13 @@
-package com.springmvcjdbc.services.impl;
+package com.dihaw.services.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springmvcjdbc.dao.UserDao;
-import com.springmvcjdbc.domain.User;
-import com.springmvcjdbc.services.UserService;
+import com.dihaw.dao.UserDao;
+import com.dihaw.domain.User;
+import com.dihaw.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

@@ -1,11 +1,11 @@
-package com.springmvcjdbc.jdbc;
+package com.dihaw.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.springmvcjdbc.domain.User;
+import com.dihaw.domain.User;
 
 public class UserExtractor implements ResultSetExtractor<User> {
 

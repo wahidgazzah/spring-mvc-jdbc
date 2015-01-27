@@ -1,4 +1,4 @@
-package com.springmvcjdbc.dao.impl;
+package com.dihaw.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,9 @@ import org.springframework.jdbc.core.metadata.CallMetaDataContext;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Repository;
 
-import com.springmvcjdbc.dao.UserDao;
-import com.springmvcjdbc.domain.User;
-import com.springmvcjdbc.jdbc.UserRowMapper;
+import com.dihaw.dao.UserDao;
+import com.dihaw.domain.User;
+import com.dihaw.jdbc.UserRowMapper;
 
 @Repository
 public class UserDaoImpl extends StoredProcedure implements UserDao {

@@ -1,4 +1,4 @@
-package com.springmvcjdbc.controller;
+package com.dihaw.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.springmvcjdbc.domain.Gender;
-import com.springmvcjdbc.domain.User;
-import com.springmvcjdbc.services.CityService;
-import com.springmvcjdbc.services.UserService;
+import com.dihaw.domain.Gender;
+import com.dihaw.domain.User;
+import com.dihaw.services.CityService;
+import com.dihaw.services.UserService;
 
 @Controller
 public class HomePageController {

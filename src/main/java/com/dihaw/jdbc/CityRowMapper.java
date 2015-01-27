@@ -1,4 +1,4 @@
-package com.springmvcjdbc.jdbc;
+package com.dihaw.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
