@@ -12,6 +12,7 @@
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+	<!-- Enable annotation-based Spring MVC controllers (eg: @Controller annotation) -->
 	<mvc:annotation-driven />
 	
 	<!-- Handles HTTP GET uncovered requests by controllers for static by efficiently serving up static resources in the ${webappRoot}/static directory -->
@@ -19,6 +20,9 @@
 	
 	<!--  msm Maven Spring MVC -->
 	<context:component-scan base-package="com.dihaw" />
+	
+	<!-- Enable @Transactional annotation -->
+	<tx:annotation-driven/>
 
 	<!-- adding view resolver to show jsp's on browser -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">	
@@ -32,13 +36,24 @@
 	</bean>
 	
 	<!-- Declare datasource bean -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/userdb" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
+
+	<!-- EntityManagerFactory -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="persistenceUnit" ></property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- Transaction Manager -->
+	  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" >
+	    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+	  </bean>
+
 
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
@@ -50,12 +65,12 @@
     </bean>
 	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
-		<property name="contentType" value="text/html;charset=utf-8" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
+		<property name="contentType" value="text/html;charset=utf-8" ></property>
 	</bean>
 	
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-		<property name="defaultLocale" value="fr" />
+		<property name="defaultLocale" value="fr" ></property>
 	</bean>
 
 </beans>

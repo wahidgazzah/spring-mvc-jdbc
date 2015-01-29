@@ -1,8 +1,8 @@
-package com.dihaw.dao;
+package com.dihaw.repository;
 
 import java.util.List;
 
-public interface CityDao {
+public interface CityRepository {
 	
 	public List<String> getCityList();
 

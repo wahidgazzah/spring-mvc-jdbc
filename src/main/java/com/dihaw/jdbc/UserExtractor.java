@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.dihaw.domain.User;
+import com.dihaw.entity.User;
 
 public class UserExtractor implements ResultSetExtractor<User> {
 

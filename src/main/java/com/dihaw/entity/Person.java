@@ -1,4 +1,4 @@
-package com.dihaw.domain;
+package com.dihaw.entity;
 
 import java.util.ArrayList;
 import java.util.List;

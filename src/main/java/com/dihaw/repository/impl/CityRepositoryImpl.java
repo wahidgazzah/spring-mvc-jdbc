@@ -1,4 +1,4 @@
-package com.dihaw.dao.impl;
+package com.dihaw.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.dihaw.dao.CityDao;
 import com.dihaw.jdbc.CityRowMapper;
+import com.dihaw.repository.CityRepository;
 
 @Repository
-public class CityDaoImpl  implements CityDao{
+public class CityRepositoryImpl  implements CityRepository{
 
 	@Autowired
 	DataSource dataSource;

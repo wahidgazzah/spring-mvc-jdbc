@@ -3,7 +3,7 @@
 <spring:url value="/" var="helloUrl" />
 <spring:url value="/msm/index" var="homeUrl" />
 <spring:url value="/msm/viewPeson" var="personListUrl"  />
-<spring:url value="/jdbc/getList" var="userListUrl"  />
+<spring:url value="/jdbc/users/pages/0" var="userListUrl"  />
  
 <div class="menu">
 	<ul>
