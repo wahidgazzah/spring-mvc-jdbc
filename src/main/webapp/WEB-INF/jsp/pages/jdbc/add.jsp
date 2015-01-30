@@ -38,7 +38,7 @@
 					<ul>
 						<li class="huge-btn">
 							<button type="submit" name="submit"><spring:message code="save" /></button>
-							<a href="users" class="btn"><spring:message code="cancel" /></a>
+							<a href="users/pages/${currentIndex}" class="btn"><spring:message code="cancel" /></a>
 						</li>
 					</ul>
 				</form:form>

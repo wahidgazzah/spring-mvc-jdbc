@@ -6,7 +6,6 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-mvc Maven Webapp</name>
-  <url>http://maven.apache.org</url>
   
 	<properties>
 		<jdk.version>1.7</jdk.version>
@@ -17,15 +16,17 @@
 		<jcl-over-slf4j.version>1.7.5</jcl-over-slf4j.version>
 		<tiles.version>3.0.3</tiles.version>
 		<hibernate.version>4.1.9.Final</hibernate.version>
+		<ehcache.version>1.6.2</ehcache.version>
 	</properties>
 	
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+	<dependencies>
+	
+	    <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>3.8.1</version>
+	      <scope>test</scope>
+	    </dependency>
     
     	<dependency>
 			<groupId>mysql</groupId>
@@ -38,6 +39,16 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring-version}</version>
+		</dependency>
+		<dependency>
+ 			<groupId>org.springframework</groupId>
+ 			<artifactId>spring-context-support</artifactId>
+ 			<version>${spring-version}</version>
+		</dependency>
+		<dependency>
+ 			<groupId>org.springframework</groupId>
+ 			<artifactId>spring-beans</artifactId>
+ 			<version>${spring-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -97,7 +108,6 @@
 		  <version>1.2.2</version>
 		</dependency>
  
- 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
@@ -109,9 +119,6 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
- 
- 
- 
  
 		<!-- Java EE -->
 		<dependency>
@@ -156,6 +163,12 @@
 		    <version>${tiles.version}</version>
 		</dependency>
 		
+		<!-- Ehcache -->
+	    <dependency>
+	    	<groupId>net.sf.ehcache</groupId>
+	    	<artifactId>ehcache</artifactId>
+	    	<version>${ehcache.version}</version>
+	    </dependency>
 	
   </dependencies>
   <build>

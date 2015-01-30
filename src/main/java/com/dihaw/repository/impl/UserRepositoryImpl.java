@@ -12,6 +12,8 @@ import javax.persistence.criteria.Root;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dihaw.entity.User;
 import com.dihaw.jdbc.UserRowMapper;
 import com.dihaw.repository.UserRepository;
+
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
@@ -64,6 +67,7 @@ public class UserRepositoryImpl implements UserRepository {
 		return userList;
 	}
 
+	@CacheEvict(value = "usersCache", allEntries=true)
 	public void deleteData(String id) {
 		String sql = "delete from user where user_id=" + id;
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -98,11 +102,17 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 	
 	@Transactional
+	@CacheEvict(value = "usersCache", allEntries=true)
 	public void addUser(User user) {
+		System.out.println("--------------@CacheEvict--addUser");
+		
 		entityManager.persist(user);
 	}
-
+	
+	@Cacheable("usersCache") 
 	public List<User> getAllByPageSize(Integer page, Integer size) {
+		
+		System.out.println("--------------Cacheable--getAllByPageSize");
 		
 		Query newquery= entityManager.createQuery("SELECT u FROM User u", User.class);
 		newquery.setFirstResult(page*size);
@@ -110,19 +120,18 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		return newquery.getResultList();
 		
-//		return entityManager.createQuery("select u from USER u", User.class).getResultList();
 	}
 
+	@Cacheable("usersCache") 
 	public int getUsersCount() {
+		
+		System.out.println("--------------Cacheable--getUsersCount");
+		
 		Query query = entityManager.createQuery("Select count(u.userId) from User u");
 		List result = query.getResultList();
 		long count = (Long) result.get(0);
 		
 		System.out.println("----------count: "+count);
-		
-		
-//		Query queryTotal = entityManager.createNativeQuery("Select count(u.user_id) from User u");
-//		int countResult = ((Integer) queryTotal.getSingleResult()).intValue();
 		
 		return (int) count;
 	}

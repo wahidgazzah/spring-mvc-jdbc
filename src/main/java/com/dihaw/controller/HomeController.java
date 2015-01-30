@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.dihaw.entity.Gender;
 import com.dihaw.entity.User;
@@ -26,14 +27,15 @@ import com.dihaw.validators.ValidatorUserEntry;
 
 @Controller
 @RequestMapping("/jdbc")
-//@SessionAttributes(HomeController.USER_FORM_ATTRIBUTE)
+@SessionAttributes(HomeController.CURRENTINDEX)
 public class HomeController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	public static final String USER_FORM_ATTRIBUTE = "user";
 	public static final String CITY_MODEL_ATTRIBUTE = "cityList";
 	public static final String GENDER_MODEL_ATTRIBUTE = "genderList";
-	public static final String USERS_COUNT = "0";
+	public static final String USERS_COUNT = "usersCount";
+	public static final String CURRENTINDEX ="currentIndex";
 	
 	public static final String MAP = "map";
 	
@@ -77,40 +79,37 @@ public class HomeController {
 	
 	@ModelAttribute(USERS_COUNT)
 	public int usersCount() {
-		System.out.println("-------------USERS_COUNT");
-		System.out.println("-------------USERS_COUNT: "+userService.getUsersCount());
-		
 		return userService.getUsersCount();
 	}
 	
+	@ModelAttribute(CURRENTINDEX)
+	public int currentIndex() {
+		return 0;
+	}
+
 	@RequestMapping(value="/users", method = RequestMethod.GET)
 	  public String listAll(Model model) {
 	    model.addAttribute("users", userService.getAll());
 	    return LIST_VIEW;
 	  }
 	
-	
-	@RequestMapping(value="/users/pages/{pageNumber}", method = RequestMethod.GET)
-	public String usersList( @PathVariable Integer pageNumber, Model model) {
+	@RequestMapping(value="/users/pages/{currentIndex}", method = RequestMethod.GET)
+	public String usersList(Model model,
+			@ModelAttribute(USERS_COUNT) int usersCount,
+			@PathVariable @ModelAttribute(CURRENTINDEX) Integer currentIndex) {
 		
-		int usersCount = usersCount();
+		int totalPages = (usersCount%5 ==0) ? usersCount / 5 : (usersCount / 5) + 1;
 		
-		System.out.println("-------2------> users list with pagination");
-		
-		int totalPages = usersCount / 3;
-		
-		int current = pageNumber ;
-	    int begin = Math.max(1, current - 5);
-	    int end = Math.min(begin + 10, totalPages);
-
-	    model.addAttribute("deploymentLog", pageNumber);
+	    int begin = Math.max(0, currentIndex - 6);
+	    int end = Math.min(begin + 10, totalPages - 1 );
+	    
 	    model.addAttribute("beginIndex", begin);
 	    model.addAttribute("endIndex", end);
-	    model.addAttribute("currentIndex", current);
+	    model.addAttribute("currentIndex", currentIndex);
 	    model.addAttribute("totalPages", totalPages);
 		
 		model.addAttribute("usersCount", usersCount);
-		model.addAttribute("users", userService.getAllByPageSize(pageNumber, 3));
+		model.addAttribute("users", userService.getAllByPageSize(currentIndex, 5));
 		
 		return USER_LIST_VIEW;
 	}
@@ -139,6 +138,7 @@ public class HomeController {
 	public String addUser(Model model,
 			@ModelAttribute(GENDER_MODEL_ATTRIBUTE) List<String> genderList, 
 			@ModelAttribute(CITY_MODEL_ATTRIBUTE) List<String> cityList,
+			@ModelAttribute(CURRENTINDEX) Integer currentIndex,
 			@Validated @ModelAttribute(USER_FORM_ATTRIBUTE) User user, 
 			BindingResult bindingResult ) {
 		
@@ -156,7 +156,7 @@ public class HomeController {
 		
 		else{
 			userService.addUser(user);
-			return "redirect:/jdbc/users";
+			return "redirect:/jdbc/users/pages/"+currentIndex;
 		}
 	}
 
@@ -164,6 +164,7 @@ public class HomeController {
 	public String editUser(Model model, ModelMap modelMap,
 			@ModelAttribute(GENDER_MODEL_ATTRIBUTE) List<String> genderList, 
 			@ModelAttribute(CITY_MODEL_ATTRIBUTE) List<String> cityList,
+			@ModelAttribute(CURRENTINDEX) Integer currentIndex,
 			@RequestParam String id,
 			@ModelAttribute(USER_FORM_ATTRIBUTE) User user,
 			BindingResult bindingResult) {
@@ -190,6 +191,7 @@ public class HomeController {
 	public String updateUser(Model model,
 			@ModelAttribute(GENDER_MODEL_ATTRIBUTE) List<String> genderList, 
 			@ModelAttribute(CITY_MODEL_ATTRIBUTE) List<String> cityList,
+			@ModelAttribute(CURRENTINDEX) Integer currentIndex,
 			@ModelAttribute(USER_FORM_ATTRIBUTE) User user,
 			BindingResult bindingResult ) {
 		
@@ -208,18 +210,19 @@ public class HomeController {
 		else{
 			
 			userService.updateData(user);
-			return "redirect:/jdbc/users";
+			return "redirect:/jdbc/users/pages/0"+currentIndex;
 		}
 		
 	}
 
 	@RequestMapping("/delete")
-	public String deleteUser(@RequestParam String id) {
+	public String deleteUser(@RequestParam String id,
+			@ModelAttribute(CURRENTINDEX) Integer currentIndex) {
 		
 		logger.info("RequestMapping: /delete");
 		
 		userService.deleteData(id);
 		
-		return "redirect:/jdbc/users";
+		return "redirect:/jdbc/users/pages/0"+currentIndex;
 	}
 }

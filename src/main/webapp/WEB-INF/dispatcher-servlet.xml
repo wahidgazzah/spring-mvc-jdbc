@@ -6,11 +6,16 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+       http://www.springframework.org/schema/cache	http://www.springframework.org/schema/cache/spring-cache.xsd ">
+       
+ 	
+ 	<cache:annotation-driven />
 
 	<!-- Enable annotation-based Spring MVC controllers (eg: @Controller annotation) -->
 	<mvc:annotation-driven />
@@ -23,6 +28,8 @@
 	
 	<!-- Enable @Transactional annotation -->
 	<tx:annotation-driven/>
+	
+	
 
 	<!-- adding view resolver to show jsp's on browser -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">	
@@ -35,6 +42,12 @@
 		<property name="basename" value="content.Language" />
 	</bean>
 	
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+  	 	
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+   		<property name="configLocation" value="WEB-INF/conf/ehcache.xml"/>
+	</bean>
+
 	<!-- Declare datasource bean -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -48,13 +61,12 @@
 		<property name="persistenceUnitName" value="persistenceUnit" ></property>
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
+
 	<!-- Transaction Manager -->
-	  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" >
-	    <property name="entityManagerFactory" ref="entityManagerFactory"/>
-	  </bean>
-
-
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	  <property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	  
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
             <list>
