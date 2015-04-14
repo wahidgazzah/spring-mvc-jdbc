@@ -2,36 +2,28 @@ package com.dihaw.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dihaw.domain.Person;
+import com.dihaw.services.PersonService;
 
 @Controller
-@RequestMapping("/msm")
+@RequestMapping("/persons")
 public class PersonsController {
 	
-	private static String INDEX_VIEW = "index";
-	private static String PERSON_LIST_VIEW = "personList";
-	private static String TEMPLATE_VIEW = "template/SiteTemplate";
-	private static String PERSONS_ATTRIBUTE = "persons";
-
-
-	@RequestMapping("/index")
-	public String index() {
-		return INDEX_VIEW;
-	}
+	@Autowired
+	PersonService personService;
 	
-	@RequestMapping("/template")
-	public String templateView() {
-		return TEMPLATE_VIEW;
-	}
-	
-	@RequestMapping("/viewPeson")
+	private static String PERSON_LIST_VIEW = "view/persons/personList";
+	private static String PERSONS_ATTRIBUTE = "view/persons/persons";
+
+	@RequestMapping("/list")
 	public String viewPersons(Model model) {
 		
-		List<Person> persons = Person.createPersons();
+		List<Person> persons = personService.getPersons();
 		
 		model.addAttribute(PERSONS_ATTRIBUTE, persons);
 		return PERSON_LIST_VIEW;

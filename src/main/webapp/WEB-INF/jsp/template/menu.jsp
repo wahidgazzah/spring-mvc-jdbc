@@ -1,35 +1,26 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <spring:url value="/" var="helloUrl" />
-<spring:url value="/msm/index" var="homeUrl" />
-<spring:url value="/msm/viewPeson" var="personListUrl"  />
-<spring:url value="/jdbc/getList" var="userListUrl"  />
- 
+<spring:url value="/about" var="aboutUrl" />
+<spring:url value="/persons/list" var="personListUrl"  />
+<spring:url value="/users/list" var="userListUrl"  />
+
 <div class="menu">
+
 	<ul>
-		<li>
-			<a href="${homeUrl}">About</a>
+		<li ${fn:contains(pageContext.request.requestURI, 'about') ? 'class="selected"' : ''}>
+			<a href="${aboutUrl}"><spring:message code="menu.about" /></a>
 		</li>
-		<li>
-			<a href="${helloUrl}">Hello</a>
+		<li ${fn:contains(pageContext.request.requestURI, 'hello') ? 'class="selected"' : ''}>
+			<a href="${helloUrl}"><spring:message code="menu.hello" /></a>
 		</li>
-		<li>
-			<a href="${personListUrl}">Person List</a>
+		<li ${fn:contains(pageContext.request.requestURI, 'persons') ? 'class="selected"' : ''}>
+			<a href="${personListUrl}"><spring:message code="menu.persons" /></a>
 		</li>
-		<li>
-			<a href="${userListUrl}">User List</a>
+		<li ${fn:contains(pageContext.request.requestURI, 'users') ? 'class="selected"' : ''}>
+			<a href="${userListUrl}"><spring:message code="menu.users" /></a>
 		</li>
 	</ul>
-</div>
-<!-- TO Use Bootsrap
-		 <div class="span3">
-            <ul class="nav nav-list">
-
-                <li><a href="${helloUrl}"><i class="icon-chevron"></i> Hello</a></li>
-                <li><a href="${homeUrl}"><i class="icon-chevron"></i> Home</a></li>
-                <li><a href="${personListUrl}"><i class="icon-chevron"></i> Person List</a></li>
-                <li><a href="${userListUrl}"><i class="icon-chevron"></i> User List</a></li>
-
-            </ul>
-		</div>
-	 -->
+</div> 

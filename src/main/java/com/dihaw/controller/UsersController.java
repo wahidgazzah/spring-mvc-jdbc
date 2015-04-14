@@ -20,13 +20,13 @@ import com.dihaw.services.CityService;
 import com.dihaw.services.UserService;
 
 @Controller
-@RequestMapping("/jdbc")
-public class HomeController {
+@RequestMapping("/users")
+public class UsersController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
-	private static String REGISTER_VIEW = "pages/sms/register";
-	private static String LIST_VIEW = "pages/sms/list";
-	private static String EDIT_VIEW = "pages/sms/edit";
+	private static String REGISTER_VIEW = "view/users/add";
+	private static String LIST_VIEW = "view/users/list";
+	private static String EDIT_VIEW = "view/users/edit";
 
 	@Autowired
 	UserService userService;
@@ -34,12 +34,6 @@ public class HomeController {
 	@Autowired
 	CityService cityService;
 	
-	@RequestMapping("/test")
-	public String testData() {
-		logger.info("------------test");
-		return "test";
-	}
-
 	@RequestMapping("/register")
 	public String registerUser(@ModelAttribute User user, Model model) {
 		
@@ -76,11 +70,11 @@ public class HomeController {
 		if (user != null)
 			userService.insertData(user);
 		
-		return "redirect:/jdbc/getList";
+		return "redirect:/users/getList";
 	}
 	
 
-	@RequestMapping("/getList")
+	@RequestMapping("/list")
 	public String getUserLIst(Model model) {
 		
 		logger.info("RequestMapping: /getList");
@@ -128,7 +122,7 @@ public class HomeController {
 		
 		userService.updateData(user);
 		
-		return "redirect:/jdbc/getList";
+		return "redirect:/users/list";
 
 	}
 
@@ -140,6 +134,6 @@ public class HomeController {
 		System.out.println("id = " + id);
 		userService.deleteData(id);
 		
-		return "redirect:/jdbc/getList";
+		return "redirect:/users/list";
 	}
 }

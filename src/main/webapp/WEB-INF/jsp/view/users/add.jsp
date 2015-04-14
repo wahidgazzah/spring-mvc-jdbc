@@ -10,7 +10,7 @@
 				<h3><spring:message code="registrationForm" /></h3>
 			</div>
 			<div class="section">
-				<form:form method="post" action="/jdbc/insert" modelAttribute="user">
+				<form:form method="post" action="/users/insert" modelAttribute="user">
 					<ul>
 						<li class="huge">
 							<form:label path="firstName"><strong><spring:message code="firstName" /></strong></form:label> 
@@ -33,7 +33,7 @@
 					</ul>
 				</form:form>
 			</div>
-			<a href="getList">Click Here to See User List</a>
+			<a href="list">Click Here to See User List</a>
 		</div>
     </tiles:putAttribute>
 </tiles:insertDefinition>

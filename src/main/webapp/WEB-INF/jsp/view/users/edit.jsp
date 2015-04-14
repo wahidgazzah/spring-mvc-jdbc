@@ -9,7 +9,7 @@
 		<div class="title">
 			<h3>Edit User</h3>
 		</div>
-			<form:form method="post" action="/jdbc/update" modelAttribute="user">
+			<form:form method="post" action="/users/update" modelAttribute="user">
 				<table>
 					<tr>
 						<td>First Name :</td>

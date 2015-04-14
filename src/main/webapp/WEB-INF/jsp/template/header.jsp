@@ -1,5 +1,11 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="header">
-	<img src="http://localhost:8085/spring-mvc-jdbc/static/images/team-logo.png" style="height: 50px; margin: 20px 0 0 10px; width: 180px;">
-	<h3 style="text-align: center; margin: 40px 30px 0px 0px; font-size: 2em !important; color:#238FC1 !important">Spring MVC JDBC Project</h3>
-	<hr>	
+	<div id="home-title">
+		<a href="<spring:url value="/"></spring:url>">
+			<h3><spring:message code="application.name"/></h3>
+		</a>
+	</div>
+	<hr>
 </div>

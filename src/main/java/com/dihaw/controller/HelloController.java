@@ -13,7 +13,8 @@ public class HelloController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private static int counter = 0;
-	private static String INDEX_VIEW = "pages/index";
+	private static String INDEX_VIEW = "view/hello/index";
+	private static String ABOUT_VIEW = "view/about/index";
 	private static String MESSAGE = "message";
 	private static String COUNTER = "counter";
 	
@@ -39,6 +40,12 @@ public class HelloController {
 		
 		return INDEX_VIEW;
  
+	}
+	
+	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	public String showAboutView() {
+ 
+		return ABOUT_VIEW;
 	}
 
 }
